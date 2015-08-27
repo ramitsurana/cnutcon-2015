@@ -45,15 +45,26 @@ etcdctl exec-watch /location -- sh -c "env | grep ETCD"
 Simulate a node failure by rebooting the current etcd leader:
 
 ```
-gcloud compute ssh controller
+gcloud compute ssh -A controller
 ```
+
+Get the current leader using the `etcd-leader` tool:
 
 ```
 etcd-leader
 ```
 
+Remotely reboot the etcd leader machine:
+
 ```
-sudo reboot
+ssh node0 "sudo reboot"
+```
+
+The remaining etcd members will automatically elect a new leader when the current leader goes down.
+Get the new etcd leader:
+
+```
+etcd-leader
 ```
 
 ---
