@@ -139,7 +139,7 @@ Use the curl command to locate the new instance of the inspector pod:
 
 ```
 while true; do curl -s http://104.155.195.1:36000/ | \
-  grep -o -e 'Version: Inspector [0-9].[0-9].[0-9]'; sleep 1; done
+  grep -o -e 'Version: Inspector [0-9].[0-9].[0-9]'; sleep .5; done
 ```
 
 Notice version 2.0.0 is mixed in with version 1.0.0?
@@ -158,7 +158,7 @@ kubectl get pods --watch
 
 ```
 while true; do curl -s http://104.155.195.1:36000/ | \
-  grep -o -e 'Version: Inspector [0-9].[0-9].[0-9]'; sleep 1; done
+  grep -o -e 'Version: Inspector [0-9].[0-9].[0-9]'; sleep .5; done
 ```
 
 #### Terminal 3
