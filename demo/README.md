@@ -166,3 +166,15 @@ while true; do curl -s http://104.155.195.1:36000/ | \
 ```
 kubectl rolling-update inspector --update-period=3s --image=b.gcr.io/kuar/inspector:2.0.0
 ```
+
+```
+ctrl-c
+```
+
+```
+kubectl rolling-update inspector --rollback=true --update-period="2s" --image=b.gcr.io/kuar/inspector:1.0.0
+```
+
+```
+kubectl rolling-update inspector --update-period=3s --image=b.gcr.io/kuar/inspector:2.0.0
+```
