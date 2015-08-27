@@ -151,7 +151,7 @@ One you are happy with the new version of the app, we can replace version 1.0.0 
 #### Terminal 1
 
 ```
-kubectl get pods --watch
+kubectl get pods --watch-only
 ```
 
 #### Terminal 2
