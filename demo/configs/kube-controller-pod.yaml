@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: kube-controller
+spec: 
+  hostNetwork: true
+  volumes:
+    - name: "etc-kubernetes"
+      hostPath:
+        path: "/etc/kubernetes"
+    - name: "ssl-certs"
+      hostPath:
+        path: "/usr/share/ca-certificates"
+    - name: "var-run-kubernetes"
+      hostPath:
+        path: "/var/run/kubernetes"
+    - name: "var-lib-kubernetes"
+      hostPath:
+        path: "/var/lib/kubernetes"
+  containers: 
+    - name: "kube-apiserver"
+      image: "b.gcr.io/kuar/kube-apiserver:1.0.3"
+      args: 
+        - "--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
+        - "--allow-privileged=true"
+        - "--etcd-servers=http://node0.c.kuarlab.internal:2379,http://node1.c.kuarlab.internal:2379,http://node2.c.kuarlab.internal:2379"
+        - "--tls-cert-file=/var/lib/kubernetes/apiserver.pem"
+        - "--tls-private-key-file=/var/lib/kubernetes/apiserver-key.pem"
+        - "--client-ca-file=/var/lib/kubernetes/ca.pem"
+        - "--insecure-bind-address=0.0.0.0"
+        - "--service-cluster-ip-range=10.200.20.0/24"
+        - "--service-node-port-range=30000-37000"
+        - "--v=2"
+      volumeMounts:
+        - mountPath: /etc/kubernetes
+          name: "etc-kubernetes"
+        - mountPath: /var/run/kubernetes
+          name: "var-run-kubernetes"
+        - mountPath: /var/lib/kubernetes
+          name: "var-lib-kubernetes"
+    - name: "kube-controller-manager"
+      image: "b.gcr.io/kuar/kube-controller-manager:1.0.3"
+      args:
+        - "--pod-eviction-timeout=10s"
+        - "--root-ca-file=/var/lib/kubernetes/ca.pem"
+        - "--service-account-private-key-file=/var/lib/kubernetes/ca-key.pem"
+        - "--master=http://127.0.0.1:8080"
+        - "--v=2"
+      volumeMounts:
+        - mountPath: /var/run/kubernetes
+          name: "var-run-kubernetes"
+        - mountPath: /var/lib/kubernetes
+          name: "var-lib-kubernetes"
+    - name: "kube-scheduler"
+      image: "b.gcr.io/kuar/kube-scheduler:1.0.3"
+      args:
+        - "--master=http://127.0.0.1:8080"
+        - "--v=2"

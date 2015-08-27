@@ -1,0 +1,151 @@
+White Papers to Production
+CNUT China 2015
+
+Kelsey Hightower
+CoreOS
+kelsey.hightower@coreos.com
+@kelseyhightower
+
+* White Papers
+
+In the past advanced infrastructure tools where only described in white papers.
+
+- Chubby: The Chubby lock service for loosely-coupled distributed systems.
+- Borg: Large-scale cluster management at Google with Borg.
+
+White papers now serve as design docs for opensource projects.
+
+- etcd: Distributed k/v store and lock service (Chubby)
+- Kubernetes: Container management platform (Borg)
+
+* White Papers
+
+Most systems described in white papers cannot be released to the public.
+
+- Large existing code bases which make many assumptions
+- Won't work well in every environment
+- Legal challenges
+
+* Can we leverage these systems in our own environments?
+
+* Chubby (White Paper)
+
+The Chubby lock service for loosely-coupled distributed systems.
+
+- Leader election
+- Source of truth for cluster information (configuration)
+- Asynchronous consensus is solved by the Paxos protocol
+
+Client Sessions
+
+- KeepAlives are used to transmit events and cache invalidations
+
+* Chubby
+
+.image images/chubby-overview.png _ 700
+
+* etcd (Production)
+
+Distributed k/v store and lock service.
+
+- Leader election
+- Source of truth for cluster information (configuration)
+- Asynchronous consensus is solved by the Raft protocol
+
+No client sessions
+
+- HTTP long poll to watch for events
+- Proxies used to scale clients
+
+* etcd demo
+
+* Borg (White Paper)
+
+Large-scale cluster management at Google with Borg
+
+- declarative job specification language
+- name service integration
+- real-time job monitoring
+- admission control (quota)
+- alloc
+- Introspection is vital (self-help)
+
+Heterogenous workloads
+
+- long-running services
+- batch jobs
+
+* Borg
+
+.image images/borg.png _ 600
+
+
+* Kubernetes (Production)
+
+Container management, scheduling, and service discovery.
+
+- API driven application management
+- Agents monitor endpoints for state changes (real-time)
+- Pods and Labels, not Jobs
+- One IP per pod and service
+- Pods vs Allocs
+- Naming and load balancing using a service abstraction
+
+* Containers
+
+Unix processes not lightweight Virtual Machines
+
+- application + dependencies = image
+- Runtime environment (cgroups, namespaces, env vars)
+
+.image images/container.png
+
+* Pod
+
+Represents a logical application.
+
+- One or more containers
+- Shared namespaces
+
+.image images/pod.png
+
+* Scheduler
+
+Schedules pods to run on nodes.
+
+- Global scheduler for long running jobs
+- Best fit chosen based on pod requirements
+- Pluggable
+
+.image images/kubernetes-scheduler.png
+
+* Replication Controller
+
+Manages a replicated set of pods.
+
+- Creates pods from a template
+- Ensures desired number of pods are running
+- Online resizing 
+
+.image images/kubernetes-rc.png
+
+* Replication Controller
+
+Manages a replicated set of pods.
+
+- Creates pods from a template
+- Ensures desired number of pods are running
+- Self-healing 
+
+.image images/kubernetes-rc-reschedule.png
+
+* Service
+
+Service discovery for pods.
+
+- Proxy runs on each node
+- Virutal IP per service (avoid port collisions)
+- Basic round-robin algorithm
+- Dynamic backends based on label queries 
+
+* Kubernetes demo
