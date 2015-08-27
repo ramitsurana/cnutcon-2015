@@ -28,7 +28,7 @@ Most systems described in white papers cannot be released to the public.
 
 * Can we leverage these systems in our own environments?
 
-* Chubby (White Paper)
+* Chubby
 
 The Chubby lock service for loosely-coupled distributed systems.
 
@@ -46,7 +46,7 @@ Clients
 
 * etcd aims to build a better Chubby through collaboration.
 
-* etcd (Production)
+* etcd
 
 Distributed k/v store and lock service.
 
@@ -73,21 +73,23 @@ etcd v3 API will offer many improvements
 
 * etcd demo
 
-* Borg (White Paper)
+* Borg
 
-Large-scale cluster management at Google with Borg
+Large-scale cluster management at Google
 
-- declarative job specification language
-- name service integration
-- real-time job monitoring
-- admission control (quota)
-- alloc
-- Introspection is vital (self-help)
+- Declarative job specification language
+- Name service integration
+- Real-time job monitoring
+- Admission control (quota)
+- Overcommit 
+
+Allocs
+
+- Fact 
 
 Heterogenous workloads
 
-- long-running services
-- batch jobs
+- long-running services and batch jobs
 
 * Borg
 
@@ -95,11 +97,10 @@ Heterogenous workloads
 
 * Kubernetes aims to build a better Borg through collaboration.
 
-* Kubernetes (Production)
+* Kubernetes
 
 Container management, scheduling, and service discovery.
 
-- Agents monitor endpoints for state changes (real-time)
 - Pods and Labels, not Jobs
 - One IP per pod and service
 - Naming and load balancing using a service abstraction
