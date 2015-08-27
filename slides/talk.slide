@@ -33,11 +33,14 @@ Most systems described in white papers cannot be released to the public.
 The Chubby lock service for loosely-coupled distributed systems.
 
 - Leader election
+- Support shared configuration across clusters (/global)
+- Exports a file system interface (/database/config)
 - Source of truth for cluster information (configuration)
 - Asynchronous consensus is solved by the Paxos protocol
 
 Clients
 
+- Clients cache 
 - KeepAlives are used to transmit events and cache invalidations
 
 * Chubby
@@ -51,6 +54,7 @@ Clients
 Distributed k/v store and lock service.
 
 - Leader election
+- Exports a file system interface (/database/config)
 - Source of truth for cluster information (configuration)
 - Asynchronous consensus is solved by the Raft protocol
 
@@ -63,6 +67,7 @@ Clients
 
 etcd v3 API will offer many improvements
 
+- Move away from file system interface (arbitrary keys with range query)
 - Add support for client sessions (Keepalives for leased keys)
 - Clients will register a watcher for a set of keys or paths (grpc stream)
 - grpc (protobufs + rpc) client interface
