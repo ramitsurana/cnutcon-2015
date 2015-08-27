@@ -36,13 +36,15 @@ The Chubby lock service for loosely-coupled distributed systems.
 - Source of truth for cluster information (configuration)
 - Asynchronous consensus is solved by the Paxos protocol
 
-Client Sessions
+Clients
 
 - KeepAlives are used to transmit events and cache invalidations
 
 * Chubby
 
 .image images/chubby-overview.png _ 700
+
+* etcd aims to build a better Chubby through collaboration.
 
 * etcd (Production)
 
@@ -52,10 +54,22 @@ Distributed k/v store and lock service.
 - Source of truth for cluster information (configuration)
 - Asynchronous consensus is solved by the Raft protocol
 
-No client sessions
+Clients
 
 - HTTP long poll to watch for events
 - Proxies used to scale clients
+
+* etcd
+
+etcd v3 API will offer many improvements
+
+- Add support for client sessions (Keepalives for leased keys)
+- Clients will register a watcher for a set of keys or paths (grpc stream)
+- grpc (protobufs + rpc) client interface
+
+* etcd
+
+.image images/etcd.png
 
 * etcd demo
 
@@ -79,17 +93,23 @@ Heterogenous workloads
 
 .image images/borg.png _ 600
 
+* Kubernetes aims to build a better Borg through collaboration.
 
 * Kubernetes (Production)
 
 Container management, scheduling, and service discovery.
 
-- API driven application management
 - Agents monitor endpoints for state changes (real-time)
 - Pods and Labels, not Jobs
 - One IP per pod and service
-- Pods vs Allocs
 - Naming and load balancing using a service abstraction
+
+Pods replace Allocs
+
+- Pods provide a resource envelope for one or more containers
+- Pods allow helper containers to share a machine and resources
+
+Run Spark and/or Hadoop on Kubernetes for batch job support
 
 * Containers
 
