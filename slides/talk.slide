@@ -40,7 +40,6 @@ The Chubby lock service for loosely-coupled distributed systems.
 
 Clients
 
-- Clients cache 
 - KeepAlives are used to transmit events and cache invalidations
 
 * Chubby
@@ -90,7 +89,7 @@ Large-scale cluster management at Google
 
 Allocs
 
-- Fact 
+- Reserved set of resources on a machine in which one or more tasks can be run.
 
 Heterogenous workloads
 
