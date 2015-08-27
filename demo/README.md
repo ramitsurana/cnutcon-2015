@@ -40,7 +40,7 @@ etcdctl set location china --ttl 10
 etcdctl exec-watch /location -- sh -c "env | grep ETCD"
 ```
 
-### Automatic failover
+### Automatic fail over
 
 Simulate a node failure by rebooting the current etcd leader:
 
@@ -91,6 +91,25 @@ Use the describe command to get more info:
 
 ```
 kubectl describe pods inspector
+```
+
+### Self-healing
+
+Replication controllers ensure the desired number of pods are always running.
+If we delete the current inspector pod:
+
+```
+kubectl get pods
+```
+
+```
+kubectl delete pods inspector-<id>
+```
+
+The inspector replication controller will replace it:
+
+```
+kubectl get pods
 ```
 
 ### Scale the inspector replication controller
@@ -158,6 +177,12 @@ Notice version 2.0.0 is mixed in with version 1.0.0?
 ### Rolling update
 
 One you are happy with the new version of the app, we can replace version 1.0.0 with version 2.0.0 across the cluster using the rolling update command.
+
+First remove the canary controller:
+
+```
+kubectl delete rc inspector-canary
+```
 
 #### Terminal 1
 
