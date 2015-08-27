@@ -45,7 +45,7 @@ etcdctl exec-watch /location -- sh -c "env | grep ETCD"
 Simulate a node failure by rebooting the current etcd leader:
 
 ```
-gcloud compute ssh node0
+gcloud compute ssh controller
 ```
 
 ```
